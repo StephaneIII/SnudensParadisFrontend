@@ -23,51 +23,51 @@ export default function Navbar() {
     {
       name: "Hunde mad",
       links: [
-        { name: "Tørfoder", href: "/category/dog-food" },
-        { name: "Vådfoder", href: "/category/dog-wet-food" },
-        { name: "Godbidder", href: "/category/dog-treats" },
+        { name: "Tørfoder", href: "/shop/dog-food" },
+        { name: "Vådfoder", href: "/shop/dog-wet-food" },
+        { name: "Godbidder", href: "/shop/dog-treats" },
       ],
     },
     {
       name: "Hvalp",
       links: [
-        { name: "Hvalpefoder", href: "/category/puppy-food" },
-        { name: "Hvalpe godbidder", href: "/category/puppy-treats" },
+        { name: "Hvalpefoder", href: "/shop/puppy-food" },
+        { name: "Hvalpe godbidder", href: "/shop/puppy-treats" },
       ],
     },
     {
       name: "pleje",
       links: [
-        { name: "Shampoo", href: "/category/shampoo" },
-        { name: "Børster", href: "/category/brushes" },
+        { name: "Shampoo", href: "/shop/shampoo" },
+        { name: "Børster", href: "/shop/brushes" },
       ],
     },
     {
       name: "Hundetøj",
       links: [
-        { name: "Jakker", href: "/category/jackets" },
-        { name: "Sweatshirts", href: "/category/sweatshirts" },
+        { name: "Jakker", href: "/shop/jackets" },
+        { name: "Sweatshirts", href: "/shop/sweatshirts" },
       ],
     },
     {
       name: "Legetøj",
       links: [
-        { name: "Bolde", href: "/category/balls" },
-        { name: "Tyggeben", href: "/category/chew-toys" },
+        { name: "Bolde", href: "/shop/balls" },
+        { name: "Tyggeben", href: "/shop/chew-toys" },
       ],
     },
     {
       name: "Halsbånd og snore",
       links: [
-        { name: "Halsbånd", href: "/category/collars" },
-        { name: "Snore", href: "/category/leashes" },
+        { name: "Halsbånd", href: "/shop/collars" },
+        { name: "Snore", href: "/shop/leashes" },
       ],
     },
     {
       name: "Træning",
       links: [
-        { name: "Træningsudstyr", href: "/category/training-equipment" },
-        { name: "Træningsgodbidder", href: "/category/training-treats" },
+        { name: "Træningsudstyr", href: "/shop/training-equipment" },
+        { name: "Træningsgodbidder", href: "/shop/training-treats" },
       ],
     }
   ]
@@ -78,7 +78,14 @@ export default function Navbar() {
       <div className="top-header">
         <Link href="/">Home</Link>
         <Link href="/shop">Shop</Link>
-        <Link href="/profile">Profile</Link>
+        {/* Linket her bestemmes om man er logget ind eller ej. Hvis man er logget ind, vil man se "Profile" linket, ellers vil man se "Login" linket. */}
+        <div className="header-links">
+          {user ? (
+            <link href="/profile">Profile</link>
+          ) : (
+            <Link href="/login">Login</Link>
+          )}
+        </div>
         <Link href="/cart">Cart ({totalItems})</Link>
       </div>
 
