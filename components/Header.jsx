@@ -26,51 +26,84 @@ export default function Header() {
     {
       name: "Hunde mad",
       links: [
-        { name: "Tørfoder", href: "/shop/dog-food" },
-        { name: "Vådfoder", href: "/shop/dog-wet-food" },
-        { name: "Godbidder", href: "/shop/dog-treats" },
+        { name: "Tørfoder", href: "/shop/hundefoder/tørfoder" },
+        { name: "Vådfoder", href: "/shop/hundefoder/vådfoder" },
+        { name: "Godbidder", href: "/shop/hundefoder/godbidder" },
       ],
     },
     {
       name: "Hvalp",
       links: [
-        { name: "Hvalpefoder", href: "/shop/puppy-food" },
-        { name: "Hvalpe godbidder", href: "/shop/puppy-treats" },
+        { name: "Hvalpefoder", href: "/shop/hvalp/hvalpFoder" },
+        { name: "Hvalpe pleje", href: "/shop/hvalp/hvalpPleje" },
+        { name: "hvalpe udstyr", href: "/shop/hvalp/hvalpeUdstyr" },
+      ],
+    },
+    {
+      name: "Hjemmet",
+      links: [
+        { name: "Hundesenge", href: "/shop/hjemmet/senge" },
+        { name: "Hundeskåle", href: "/shop/hjemmet/skåle" },
+        { name: "Rengøring", href: "/shop/hjemmet/rengøring" },
       ],
     },
     {
       name: "pleje",
       links: [
-        { name: "Shampoo", href: "/shop/shampoo" },
-        { name: "Børster", href: "/shop/brushes" },
+        { name: "Pelspleje", href: "/shop/sundhed/pelspleje" },
+        { name: "Tandpleje", href: "/shop/sundhed/tandpleje" },
+        { name: "Mave & tarme", href: "/shop/sundhed/mavepleje" },
       ],
     },
     {
-      name: "Hundetøj",
+      name: "Loppe- & flåtmidler",
       links: [
-        { name: "Jakker", href: "/shop/jackets" },
-        { name: "Sweatshirts", href: "/shop/sweatshirts" },
+        { name: "Kamme", href: "/shop/loppe-flåtmidler/kamme" },
+        { name: "Kræm", href: "/shop/loppe-flåtmidler/kræm" },
+      ],
+    },
+    {
+      name: "Udendørs",
+      links: [
+        { name: "Halsbånd", href: "/shop/udendørs/halsbånd" },
+        { name: "Snore", href: "/shop/udendørs/hundesnor" },
+        { name: "Seler", href: "/shop/udendørs/seler" },
+        { name: "Mundkurve", href: "/shop/udendørs/mundkurve" },
+        { name: "Poser", href: "/shop/udendørs/poser" },
+        { name: "Regntøj", href: "/shop/hundetøj/regntøj" },
       ],
     },
     {
       name: "Legetøj",
       links: [
-        { name: "Bolde", href: "/shop/balls" },
-        { name: "Tyggeben", href: "/shop/chew-toys" },
+        { name: "Bamser", href: "/shop/legetøj/bamser" },
+        { name: "Kaste", href: "/shop/legetøj/kaste" },
+        { name: "Tyggeben", href: "/shop/legetøj/tygge" },
       ],
     },
     {
-      name: "Halsbånd og snore",
+      name: "Transport & Sikkerhed",
       links: [
-        { name: "Halsbånd", href: "/shop/collars" },
-        { name: "Snore", href: "/shop/leashes" },
+        { name: "hundetasker", href: "/shop/transportSikkerhed/hundetaske" },
+        { name: "Låger & gitter", href: "/shop/transportSikkerhed/låger-gitter" },
+        { name: "Transportkasser & -bure", href: "/shop/transportSikkerhed/transportkasser-bure" },
+      ],
+    },
+    {
+      name: "Hundetøj",
+      links: [
+        { name: "Regntøj", href: "/shop/hundetøj/regntøj" },
+        { name: "Trøjer", href: "/shop/hundetøj/sweater" },
+        { name: "Jakker", href: "/shop/hundetøj/jakker" },
       ],
     },
     {
       name: "Træning",
       links: [
-        { name: "Træningsudstyr", href: "/shop/training-equipment" },
-        { name: "Træningsgodbidder", href: "/shop/training-treats" },
+        { name: "Agilityudstyr", href: "/shop/træning/agility" },
+        { name: "Fløjter", href: "/shop/træning/fløjter" },
+        { name: "godbidtasker", href: "/shop/træning/godbidtasker" },
+        { name: "Træningsgodbidder", href: "/shop/hundefoder/godbidder" },
       ],
     }
   ]
