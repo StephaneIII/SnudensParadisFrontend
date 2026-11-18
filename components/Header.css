@@ -1,0 +1,140 @@
+/* HEADER */
+
+.header {
+  width: 100%;
+  position: relative;
+  z-index: 100;
+  background: white;
+  font-family: Arial, sans-serif;
+}
+
+/* TOP ROW */
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #17652e;
+  color: white;
+  padding: 20px 4%;
+  gap: 30px;
+  min-height: 90px;
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.search-container {
+  flex: 1;
+  max-width: 650px;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+}
+
+.header-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.header-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* BOTTOM ROW */
+
+.header-bottom {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  padding: 0 4%;
+  min-height: 65px;
+  border-bottom: 2px solid #dce8dc;
+}
+
+.category-button {
+  background: none;
+  border: none;
+  font-size: 17px;
+  color: #17652e;
+  cursor: pointer;
+  padding: 20px 0;
+}
+
+.nav-category:hover,
+.nav-category.active {
+  border-bottom: 3px solid #17652e;
+}
+
+.arrow {
+  margin-left: 10px;
+}
+
+/* DROPDOWN MENU */
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  padding: 40px 4%;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+  border-top: 1px solid #eee;
+}
+
+.dropdown-menu-content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 35px;
+}
+
+.dropdown-menu-content a {
+  color: #17652e;
+  text-decoration: none;
+  font-size: 17px;
+  padding: 10px;
+}
+
+.dropdown-menu-content a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+/* This section ensures the header looks good on smaller screens */
+
+@media (max-width: 768px) {
+  .header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .search-container {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .header-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .dropdown-menu-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,12 +1,14 @@
 "use client";
 // Link is used to navigation between Next.js pages.
 // useSelector is used to read data from Redux-store.
+import { useState } from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import "./Header.css"; // Import the CSS file for styling
 
-export default function Navbar() {
+export default function Header() {
   // State to manage the active category for dropdowns
-  const [activeCategory, setActiveCategory] = React.useState(null);
+  const [activeCategory, setActiveCategory] = useState(null);
 
   // Cart
   const cartItems = useSelector(
@@ -16,7 +18,8 @@ export default function Navbar() {
     (total, item) => total + item.quantity, 0);
 
   // Authentication
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector(
+    (state) => state.auth?.user);
 
   // Navigation categories
   const categories = [
@@ -74,14 +77,15 @@ export default function Navbar() {
 
   return (
     <header className="header">
+
       {/* Top Header */}
-      <div className="top-header">
+      <div className="header-top">
         <Link href="/">Home</Link>
         <Link href="/shop">Shop</Link>
         {/* Linket her bestemmes om man er logget ind eller ej. Hvis man er logget ind, vil man se "Profile" linket, ellers vil man se "Login" linket. */}
         <div className="header-links">
           {user ? (
-            <link href="/profile">Profile</link>
+            <Link href="/profile">Profile</Link>
           ) : (
             <Link href="/login">Login</Link>
           )}
@@ -90,42 +94,44 @@ export default function Navbar() {
       </div>
 
       {/* Bottom Header */}
-      <nav className="bottom-header">
+      <nav className="header-bottom">
         {categories.map((category) => (
-          <button
+          <div
             key={category.name}
-            className="category-button"
+            className="category-container"
             onMouseEnter={() => setActiveCategory(category.name)}
             onMouseLeave={() => setActiveCategory(null)}
           >
-            {category.name}
-            <div className="dropdown">
-              {category.links.map((link) => (
-                <Link key={link.name} href={link.href}>
-                  {link.name}
-                </Link>
-              ))}
-            </div>
-          </button>
-        ))}
-      </nav>
+            <button className={`category-button ${
+              activeCategory === category.name
+               ? "active" 
+               : ""
+            }`}
+            aria-expanded={activeCategory === category.name}
+            >
+              {category.name}
+            </button>
 
-      {/* Dropdown for active category */}
-      {activeCategory && (
-        <div className="dropdown-menu">
-          {categories
-            .filter((cat) => cat.name === activeCategory)
-            .map((cat) => (
-              <div key={cat.name} className="dropdown-content">
-                {cat.links.map((link) => (
-                  <Link key={link.name} href={link.href}>
+          {/* Dropdown for active category */}
+          {activeCategory === category.name && (
+            <div className="dropdown-menu">
+              <div className="dropdown-menu-content">
+                {category.links.map((link) => (
+                  <Link
+                    key={link.name} 
+                    href={link.href}
+                    onClick={() => setActiveCategory(null)}
+                    >
                     {link.name}
                   </Link>
-                ))}
+                  ))
+                }
               </div>
-            ))}
-        </div>
-      )}
+            </div>
+            )}
+          </div>
+        ))}
+      </nav>
     </header>
   );
 }
