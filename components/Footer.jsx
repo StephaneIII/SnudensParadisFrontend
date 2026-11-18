@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer style={{ padding: "10px", background: "#009d32", textAlign: "center" }}>
+    <footer style={{ padding: "10px", background: "#17652e", textAlign: "center" }}>
       <p>&copy; 2026 Snudens Paradis. All rights reserved.</p>
     </footer>
   );
