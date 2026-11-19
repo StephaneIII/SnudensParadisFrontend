@@ -4,6 +4,7 @@ import image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../redux/cartSlice";
+import { UsedAPI } from "../api/BaseUrl";
 
 export default function ShopPage() {
   // Create access to Redux-dispatch
@@ -17,15 +18,13 @@ export default function ShopPage() {
   useEffect(() => {
     async function fetchProducts() {
         try {
-            const response = await fetch(
-                //Placeholder text
-            );
+            const response = await fetch(`${UsedAPI}products`);
 
             if (!response.ok) {
                 throw new Error("Kunne ikke hente produkter");
             }
             const data = await response.json();
-            setProducts(data);
+            setProducts(data.products);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -39,21 +38,24 @@ export default function ShopPage() {
   return (
     <div className="page">
         <h1>Shop Page</h1>
-        {/* Render the product grid */}
-        <div className="product-grid">
-            {products.map((product) => (
-                <div className="product-item" key={product.id}>
-                    <img src={product.image} alt={product.name} width={250} height={250} />
-                    <h2>{product.name}</h2>
-                    <p>{product.brand}</p>
-                    <p>Rating: {product.rating || "Not rated"}</p>
-                    <p>Price: ${product.price}</p>
-                    <button onClick={() => dispatch(addToCart(product))}>
-                        Add to Cart
-                    </button>
-                </div>
-            ))}
-        </div>
+        {loading && <p>Loading products...</p>}
+        {error && <p style={{ color: "red" }}>Error: {error}</p>}
+        {!loading && !error && (
+            <div className="product-grid">
+                {products.map((product) => (
+                    <div className="product-item" key={product.product_id}>
+                        <img src={product.image || "/placeholder.png"} alt={product.name} width={250} height={250} />
+                        <h2>{product.name}</h2>
+                        <p>{product.mærke}</p>
+                        <p>Rating: {product.rating || "Not rated"}</p>
+                        <p>Price: ${product.price}</p>
+                        <button onClick={() => dispatch(addToCart(product))}>
+                            Add to Cart
+                        </button>
+                    </div>
+                ))}
+            </div>
+        )}
     </div>
   )
 }
