@@ -31,6 +31,10 @@ The profile page sends a `PUT` request to the selected API's `profile` endpoint
 with the login token and current password. Changing the password additionally
 requires confirming the new password.
 
+Category pages filter products by the header label (case-insensitive) in an
+`attribute_values` entry's `value`, or in an `attribute` array of strings.
+The products endpoint may return an array or an object containing a `products` array.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
