@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../redux/authSlice";
 import "./login.css";
-import { UsedAPI } from "../api/BaseUrl";
+import { getUsedAPI } from "../api/BaseUrl";
+import { withCurrentAPI } from "../api/navigation";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export default function LoginPage() {
 
     let response;
     try {
-      response = await fetch(`${UsedAPI}login`, {
+      response = await fetch(`${getUsedAPI()}login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -59,7 +60,7 @@ export default function LoginPage() {
     dispatch(login({ user: data.user, token: data.token }));
     setPassword("");
     setLoading(false);
-    router.replace("/");
+    router.replace(withCurrentAPI("/"));
   }
 
   return (

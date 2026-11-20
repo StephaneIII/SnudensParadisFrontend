@@ -4,7 +4,7 @@ import image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../redux/cartSlice";
-import { UsedAPI } from "../api/BaseUrl";
+import { getUsedAPI } from "../api/BaseUrl";
 
 export default function ShopPage() {
   // Create access to Redux-dispatch
@@ -18,7 +18,7 @@ export default function ShopPage() {
   useEffect(() => {
     async function fetchProducts() {
         try {
-            const response = await fetch(`${UsedAPI}products`);
+            const response = await fetch(`${getUsedAPI()}products`);
 
             if (!response.ok) {
                 throw new Error("Kunne ikke hente produkter");

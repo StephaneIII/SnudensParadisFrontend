@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "../components/ApiLink";
 
 // Next.js uses this component as front-page,
 // because this file is named app/page.jsx

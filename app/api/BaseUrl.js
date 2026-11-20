@@ -22,6 +22,7 @@ const getAPI = (url) => {
   return api;
 };
 
-const selectedAPI = typeof window === "undefined" ? "1" : getAPI(window.location.href);
-
-export const UsedAPI = selectedAPI === "1" ? LARAVEL_BASE_URL : WORDPRESS_BASE_URL;
+export const getUsedAPI = () => {
+  const selectedAPI = typeof window === "undefined" ? "1" : getAPI(window.location.href);
+  return selectedAPI === "1" ? LARAVEL_BASE_URL : WORDPRESS_BASE_URL;
+};

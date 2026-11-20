@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "../../components/ApiLink";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../redux/authSlice";
 import "../login/login.css";
 import "./profile.css";
-import { UsedAPI } from "../api/BaseUrl";
+import { getUsedAPI } from "../api/BaseUrl";
+import { withCurrentAPI } from "../api/navigation";
 
 function ProfileForm({ user, token }) {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ function ProfileForm({ user, token }) {
     setPasswordConfirmation("");
     setError("");
     setMessage("");
-    router.push("/");
+    router.push(withCurrentAPI("/"));
   }
 
   async function handleSubmit(event) {
@@ -64,7 +65,7 @@ function ProfileForm({ user, token }) {
     setSaving(true);
     let response;
     try {
-      response = await fetch(`${UsedAPI}profile`, {
+      response = await fetch(`${getUsedAPI()}profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -126,7 +127,7 @@ function ProfileForm({ user, token }) {
           </div>
         </>
       ) : (
-        <button type="button" onClick={() => router.push("/")}>Tilbage til forsiden</button>
+        <button type="button" onClick={() => router.push(withCurrentAPI("/"))}>Tilbage til forsiden</button>
       )}
       {error && <p className="login-error" role="alert">{error}</p>}
       {message && <p role="status">{message}</p>}
