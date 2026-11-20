@@ -1,5 +1,5 @@
-//base url api1 http://localhost:8080/wp-json/api
-//base url api 2 http://localhost:8000/api/
+//base url api1 http://localhost:8000/api/
+//base url api 2 http://localhost:8080/wp-json/api
 
 
 const WORDPRESS_BASE_URL = "http://localhost:8080/wp-json/api/";
