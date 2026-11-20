@@ -1,111 +1,151 @@
+
 "use client";
 
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart, clearCart, } from "../../redux/cartSlice";
+
+import {
+    addToCart,
+    removeFromCart,
+    deleteFromCart,
+    updateQuantity,
+    clearCart,
+} from "../../redux/cartSlice";
 
 export default function CartPage() {
-  const cartItems = useSelector(
-    (state) => state.cart.items
-  );
+    const cartItems = useSelector((state) => state.cart.items);
+    const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
-
-  const [purchaseConfirmed, setPurchaseConfirmed] = useState(false);
-
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-
-  const totalItems = cartItems.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
-
-  function handleConfirmPurchase() {
-    dispatch(clearCart());
-    setPurchaseConfirmed(true);
-  }
-
-  if (purchaseConfirmed) {
-    return (
-      <div className="page cart-page">
-        <h1>Purchase Confirmed</h1>
-        <p>Thank you for your purchase!</p>
-
-        <button onClick={() => setPurchaseConfirmed(false)}>
-          Back to cart
-        </button>
-      </div>
+    // Calculate total price
+    const totalPrice = cartItems.reduce(
+        (total, item) => total + Number(item.price) * item.quantity,
+        0
     );
-  }
 
-  return (
-    <div className="page cart-page">
-      <h1>Shopping Cart</h1>
+    // Calculate total number of items
+    const totalItems = cartItems.reduce(
+        (total, item) => total + item.quantity,
+        0
+    );
 
-       {/* Render the cart items or a message if the cart is empty */}
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : ( // or Render the list of cart items and the Clear Cart button
-        <>
-          <p>
-            You have {totalItems} item
-            {totalItems !== 1 ? "s" : ""} in your cart.
-          </p>
+    return (
+        <div className="page cart-page">
+            <h1>Shopping Cart</h1>
 
-          <div className="cart-items">
-            {cartItems.map((item) => (
-              <div className="cart-item" key={item.id}>
-                <img src={item.image} alt={item.name} />
-                {/* Display the item name, price, and quantity controls */}
-                <div className="cart-item-details">
-                  <h2>{item.name}</h2>
-                  <p>Price: ${item.price.toFixed(2)}</p>
-                  <p>Quantity: {item.quantity}</p>
-                  <div className="quantity-controls">
-                    <button
-                      onClick={() => dispatch(removeFromCart(item.id))}
-                      >
-                      -
-                    </button>
-                    <button
-                      onClick={() => dispatch(addToCart(item))}
-                      >
-                      +
-                    </button>
-                  </div>
-                </div>
-                {/* Display the total price for this item and a Remove button */}
-                <div className="cart-item-right">
-                  <strong>
-                      ${(item.price * item.quantity).toFixed(2)}
-                  </strong>
-                  <button className="remove-button"
-                   onClick={() => dispatch(removeFromCart(item.id))}>
-                    Remove
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-          {/* Display the total price and buttons for clearing the cart and confirming the order */}
-          <div className="cart-summary">
-            <h2>Total: ${totalPrice.toFixed(2)}</h2>
-            <div className="cart-buttons">
-              {/* Empties cart, without confirmation */}
-              <button className="clear-button" onClick={() => dispatch(clearCart())}>
-                  Empty Cart
-              </button>
-              {/* Empties cart, with confirmation */}
-              <button className="confirm-button" onClick={handleConfirmPurchase}>
-                Confirm Purchase
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-    </div>
-  );
+            {cartItems.length === 0 ? (
+                <p>Your cart is empty.</p>
+            ) : (
+                <>
+                    <p>
+                        You have {totalItems} item
+                        {totalItems !== 1 ? "s" : ""} in your cart.
+                    </p>
+
+                    <div className="cart-items">
+                        {cartItems.map((item) => (
+                            <div
+                                className="cart-item"
+                                key={item.product_id}
+                            >
+                                <img
+                                    src={item.image || "/placeholder.png"}
+                                    alt={item.name}
+                                />
+
+                                <div className="cart-item-details">
+                                    <h2>{item.name}</h2>
+
+                                    <p>
+                                        Price: $
+                                        {Number(item.price).toFixed(2)}
+                                    </p>
+
+                                    <div className="quantity-controls">
+                                        <button
+                                            onClick={() =>
+                                                dispatch(
+                                                    removeFromCart(item.product_id)
+                                                )
+                                            }
+                                        >
+                                            -
+                                        </button>
+
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            step="1"
+                                            value={item.quantity}
+                                            onChange={(e) => {
+                                                const quantity = Number(e.target.value);
+
+                                                if (
+                                                    Number.isInteger(quantity) &&
+                                                    quantity >= 1
+                                                ) {
+                                                    dispatch(
+                                                        updateQuantity({
+                                                            product_id: item.product_id,
+                                                            quantity,
+                                                        })
+                                                    );
+                                                }
+                                            }}
+                                        />
+
+                                        <button
+                                            onClick={() =>
+                                                dispatch(addToCart(item))
+                                            }
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="cart-item-right">
+                                    <strong>
+                                        $
+                                        {(
+                                            Number(item.price) * item.quantity
+                                        ).toFixed(2)}
+                                    </strong>
+
+                                    <button
+                                        className="remove-button"
+                                        onClick={() =>
+                                            dispatch(
+                                                deleteFromCart(item.product_id)
+                                            )
+                                        }
+                                    >
+                                        Remove
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="cart-summary">
+                        <h2>Total: ${totalPrice.toFixed(2)}</h2>
+
+                        <div className="cart-buttons">
+                            <button
+                                className="clear-button"
+                                onClick={() => dispatch(clearCart())}
+                            >
+                                Empty Cart
+                            </button>
+
+                            <button
+                                className="confirm-button"
+                                disabled
+                            >
+                                Checkout (coming next)
+                            </button>
+                        </div>
+                    </div>
+                </>
+            )}
+        </div>
+    );
 }

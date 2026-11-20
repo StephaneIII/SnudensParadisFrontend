@@ -1,6 +1,7 @@
-import {createSlice} from "@reduxjs/toolkit";
 
-// Starttilstand for cartSlice/kurven (den starter tom)
+import { createSlice } from "@reduxjs/toolkit";
+
+// Initial state
 const initialState = {
     items: [],
 };
@@ -10,48 +11,77 @@ const cartSlice = createSlice({
     initialState,
 
     reducers: {
-        //Adds items
+        // Adds a product or increases its quantity
         addToCart: (state, action) => {
             const product = action.payload;
 
-            // Check if the product already exists in the cart
             const existingItem = state.items.find(
-                (item) => item.id === product.id
+                (item) => item.product_id === product.product_id
             );
-            // If it exists, increase the quantity, otherwise add it to the cart with quantity 1
+
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
                 state.items.push({ ...product, quantity: 1 });
             }
         },
-        // Removes items
+
+        // Decreases quantity by 1
         removeFromCart: (state, action) => {
-            const id = typeof action.payload === "object"
-             ? action.payload.id
-             : action.payload;
+            const product_id = action.payload;
 
             const existingItem = state.items.find(
-                (item) => item.id === id
+                (item) => item.product_id === product_id
             );
 
-            if (!existingItem) return; // If the item doesn't exist, do nothing
+            if (!existingItem) return;
 
             if (existingItem.quantity === 1) {
                 state.items = state.items.filter(
-                    (item) => item.id !== id
+                    (item) => item.product_id !== product_id
                 );
             } else {
                 existingItem.quantity -= 1;
             }
         },
 
-        // Clears the cart
+        // Removes an entire product from the cart
+        deleteFromCart: (state, action) => {
+            const product_id = action.payload;
+
+            state.items = state.items.filter(
+                (item) => item.product_id !== product_id
+            );
+        },
+
+        // Sets a specific quantity
+        updateQuantity: (state, action) => {
+            const { product_id, quantity } = action.payload;
+
+            const existingItem = state.items.find(
+                (item) => item.product_id === product_id
+            );
+
+            if (!existingItem || !Number.isInteger(quantity) || quantity < 1) {
+                return;
+            }
+
+            existingItem.quantity = quantity;
+        },
+
+        // Clears the entire cart
         clearCart: (state) => {
             state.items = [];
         },
     },
 });
 
-export const { addToCart, removeFromCart, clearCart} = cartSlice.actions;
+export const {
+    addToCart,
+    removeFromCart,
+    deleteFromCart,
+    updateQuantity,
+    clearCart,
+} = cartSlice.actions;
+
 export default cartSlice.reducer;
