@@ -115,11 +115,14 @@ export default function Header() {
       <div className="header-top">
         <Link href="/">Home</Link>
         <Link href="/shop">Shop</Link>
-        <div className="header-links">
+        <div className="header-links" lang="da">
           {user ? (
-            <Link href="/login">Log out</Link>
+            <>
+              <Link href="/profile">Profil</Link>
+              <Link href="/login">Log ud</Link>
+            </>
           ) : (
-            <Link href="/login">Login</Link>
+            <Link href="/login">Log ind</Link>
           )}
         </div>
         <Link href="/cart">Cart ({totalItems})</Link>

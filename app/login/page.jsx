@@ -29,13 +29,13 @@ export default function LoginPage() {
         body: JSON.stringify({ email, password }),
       });
     } catch {
-      setError("Could not reach the login service. Please try again later.");
+      setError("Kunne ikke oprette forbindelse til login-tjenesten. Prøv igen senere.");
       setLoading(false);
       return;
     }
 
     if (!response.ok) {
-      setError(`Login failed (HTTP ${response.status}). Please check your credentials and try again.`);
+      setError(`Login mislykkedes (HTTP ${response.status}). Kontrollér dine oplysninger, og prøv igen.`);
       setLoading(false);
       return;
     }
@@ -44,14 +44,14 @@ export default function LoginPage() {
     try {
       data = await response.json();
     } catch {
-      setError("The login service returned an invalid response.");
+      setError("Login-tjenesten returnerede et ugyldigt svar.");
       setLoading(false);
       return;
     }
 
     if (!data || !data.user || typeof data.user !== "object" || Array.isArray(data.user) ||
         typeof data.token !== "string" || !data.token.trim()) {
-      setError("The login service returned an invalid response.");
+      setError("Login-tjenesten returnerede et ugyldigt svar.");
       setLoading(false);
       return;
     }
@@ -63,16 +63,16 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="page login-container">
+    <div className="page login-container" lang="da">
       <div className="login-card">
-        <h1>{user ? "Logged in" : "Login"}</h1>
+        <h1>{user ? "Du er logget ind" : "Log ind"}</h1>
         {user ? (
           <div className="login-form">
-            <button type="button" onClick={() => dispatch(logout())}>Log out</button>
+            <button type="button" onClick={() => dispatch(logout())}>Log ud</button>
           </div>
         ) : (
           <form className="login-form" onSubmit={handleSubmit}>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">E-mail</label>
             <input
               id="email"
               name="email"
@@ -83,7 +83,7 @@ export default function LoginPage() {
               required
             />
 
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Adgangskode</label>
             <input
               id="password"
               name="password"
@@ -95,7 +95,7 @@ export default function LoginPage() {
             />
 
             <button type="submit" disabled={loading}>
-              {loading ? "Logging in..." : "Login"}
+              {loading ? "Logger ind..." : "Log ind"}
             </button>
             {error && <p className="login-error" role="alert">{error}</p>}
           </form>

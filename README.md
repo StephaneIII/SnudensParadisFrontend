@@ -25,6 +25,9 @@ in memory only and are cleared on refresh or logout. Logout only clears local
 state; it does not revoke the token on the server.
 After login, the app returns to the home page. The top-bar Log out link opens
 the login page, where the Log out button clears the local session.
+The profile page uses `PUT http://localhost:8000/api/profile` with the login
+token and current password. Sign in through the Laravel API to edit a profile;
+changing the password additionally requires confirming the new password.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
