@@ -205,7 +205,126 @@ footer {
     border-radius: 8px;
 }
 
-/* Responsive layout */
+/* Homepage */
+
+.home-page {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 40px 35px;
+    min-height: 70svh;
+    display: flex;
+    align-items: center;
+}
+
+/* Hero section */
+
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    width: 100%;
+    min-height: 480px;
+    background: #f1f6f0;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/* Hero text */
+
+.hero-content {
+    padding: 55px;
+}
+
+.hero-label {
+    display: inline-block;
+    color: #176b3a;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+}
+
+.hero-content h1 {
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.15;
+    color: #164d30;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.hero-content p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #626b63;
+    margin-bottom: 30px;
+    max-width: 450px;
+}
+
+/* Shopping button */
+
+.button-link {
+    display: inline-block;
+    padding: 15px 30px;
+    background: #176b3a;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.button-link:hover {
+    background: #10552d;
+    transform: translateY(-2px);
+}
+
+/* Hero image */
+
+.hero-image {
+    height: 100%;
+    min-height: 480px;
+    overflow: hidden;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+    .home-page {
+        padding: 25px 15px;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-content {
+        padding: 35px 25px;
+    }
+
+    .hero-image {
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 450px) {
+    .hero-content h1 {
+        font-size: 32px;
+    }
+
+    .hero-image {
+        min-height: 230px;
+    }
+}
+
 
 @media (max-width: 1000px) {
     .product-grid {

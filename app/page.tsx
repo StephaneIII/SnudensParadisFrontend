@@ -1,17 +1,33 @@
 import Link from "../components/ApiLink";
 
-// Next.js uses this component as front-page,
-// because this file is named app/page.jsx
 export default function HomePage() {
   return (
     <div className="home-page">
-      <h1>Snudens Paradis</h1>
+      <section className="hero">
+        <div className="hero-content">
+          <span className="hero-label">
+            Velkommen til Snudens Paradis
+          </span>
 
-      <p>Welcome to our online shop! :D</p>
+          <h1>Alt det bedste til din bedste ven.</h1>
 
-      <Link className="button-link" href="/shop">
-          Start shopping
-      </Link>
+          <p>
+            Find alt, hvad din hund har brug for – fra foder og legetøj
+            til tilbehør og udstyr til udendørs eventyr.
+          </p>
+
+          <Link className="button-link" href="/shop">
+            Gå på opdagelse →
+          </Link>
+        </div>
+
+        <div className="hero-image">
+          <img
+            src="/images/hero-dog.jpg"
+            alt="Golden retriever, der slapper af i græsset"
+          />
+        </div>
+      </section>
     </div>
   );
 }
