@@ -19,9 +19,7 @@ export default function CategoryPage() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(
-          //Placeholder text
-        );
+        const response = await fetch(`${UsedAPI}products`)
 
         if (!response.ok) {
           throw new Error("Kunne ikke hente produkter");
@@ -65,7 +63,26 @@ export default function CategoryPage() {
           category.slice(1)}
       </h1>
 
-      {/* <ProductGrid products={products} /> */}
+      {/* <ProductGrid> */}
+      {loading && <p>Loading products...</p>}
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+              
+      {!loading && !error && (
+        <div className="product-grid">
+          {products.map((product) => (
+            <div className="product-item" key={product.product_id}>
+              <img src={product.image || "/placeholder.png"} alt={product.name} width={250} height={250} />
+              <h2>{product.name}</h2>
+              <p>{product.mærke}</p>
+              <p>Rating: {product.rating || "Not rated"}</p>
+              <p>Price: ${product.price}</p>
+              <button onClick={() => dispatch(addToCart(product))}>
+                Add to Cart
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

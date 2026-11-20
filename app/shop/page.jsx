@@ -24,6 +24,7 @@ export default function ShopPage() {
                 throw new Error("Kunne ikke hente produkter");
             }
             const data = await response.json();
+
             setProducts(data.products);
         } catch (err) {
             setError(err.message);
@@ -40,6 +41,7 @@ export default function ShopPage() {
         <h1>Shop Page</h1>
         {loading && <p>Loading products...</p>}
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
+        
         {!loading && !error && (
             <div className="product-grid">
                 {products.map((product) => (
