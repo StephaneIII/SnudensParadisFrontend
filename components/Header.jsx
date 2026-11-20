@@ -19,7 +19,7 @@ export default function Header() {
 
   // Authentication
   const user = useSelector(
-    (state) => state.auth?.user);
+    (state) => state.auth.user);
 
   // Navigation categories
   const categories = [
@@ -115,12 +115,14 @@ export default function Header() {
       <div className="header-top">
         <Link href="/">Home</Link>
         <Link href="/shop">Shop</Link>
-        {/* Linket her bestemmes om man er logget ind eller ej. Hvis man er logget ind, vil man se "Profile" linket, ellers vil man se "Login" linket. */}
-        <div className="header-links">
+        <div className="header-links" lang="da">
           {user ? (
-            <Link href="/profile">Profile</Link>
+            <>
+              <Link href="/profile">Profil</Link>
+              <Link href="/login">Log ud</Link>
+            </>
           ) : (
-            <Link href="/login">Login</Link>
+            <Link href="/login">Log ind</Link>
           )}
         </div>
         <Link href="/cart">Cart ({totalItems})</Link>

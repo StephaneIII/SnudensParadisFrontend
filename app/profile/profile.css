@@ -1,0 +1,17 @@
+.profile-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.profile-actions button {
+  flex: 1;
+}
+
+.profile-login-prompt {
+  margin-top: 24px;
+}
+
+.profile-login-prompt a {
+  color: #17652e;
+  text-decoration: underline;
+}
