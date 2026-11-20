@@ -1,6 +1,7 @@
 
 "use client";
 
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -11,9 +12,17 @@ import {
     clearCart,
 } from "../../redux/cartSlice";
 
+import { UsedAPI } from "../api/BaseUrl";
+
 export default function CartPage() {
     const cartItems = useSelector((state) => state.cart.items);
+    const token = useSelector((state) => state.auth.token);
+    const user = useSelector((state) => state.auth.user);
+
     const dispatch = useDispatch();
+
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
 
     // Calculate total price
     const totalPrice = cartItems.reduce(
@@ -26,6 +35,63 @@ export default function CartPage() {
         (total, item) => total + item.quantity,
         0
     );
+
+    // Checkout
+    async function handleCheckout() {
+        if (!token || !user) {
+            setMessage("Please log in before checking out.");
+            return;
+        }
+
+        // Support the different user ID field names
+        const userId = user.uid ?? user.userID ?? user.id;
+
+        if (!userId) {
+            setMessage("Could not find your user ID.");
+            return;
+        }
+
+        setLoading(true);
+        setMessage("");
+
+        // Convert cart items to the API format
+        const orderItems = cartItems.map((item) => ({
+            product_id: item.product_id,
+            amount: item.quantity,
+        }));
+
+        try {
+            const response = await fetch(`${UsedAPI}orders/${userId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                    Accept: "application/json",
+                },
+                body: JSON.stringify({
+                    items: orderItems,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.message || "Could not create your order."
+                );
+            }
+
+            // Clear cart only after successful order creation
+            dispatch(clearCart());
+
+            setMessage("Order created successfully!");
+            
+        } catch (error) {
+            setMessage(error.message || "Something went wrong.");
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <div className="page cart-page">
@@ -76,7 +142,9 @@ export default function CartPage() {
                                             step="1"
                                             value={item.quantity}
                                             onChange={(e) => {
-                                                const quantity = Number(e.target.value);
+                                                const quantity = Number(
+                                                    e.target.value
+                                                );
 
                                                 if (
                                                     Number.isInteger(quantity) &&
@@ -106,7 +174,8 @@ export default function CartPage() {
                                     <strong>
                                         $
                                         {(
-                                            Number(item.price) * item.quantity
+                                            Number(item.price) *
+                                            item.quantity
                                         ).toFixed(2)}
                                     </strong>
 
@@ -138,11 +207,14 @@ export default function CartPage() {
 
                             <button
                                 className="confirm-button"
-                                disabled
+                                onClick={handleCheckout}
+                                disabled={loading}
                             >
-                                Checkout (coming next)
+                                {loading ? "Processing..." : "Checkout"}
                             </button>
                         </div>
+
+                        {message && <p role="status">{message}</p>}
                     </div>
                 </>
             )}
