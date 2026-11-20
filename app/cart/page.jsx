@@ -12,7 +12,7 @@ import {
     clearCart,
 } from "../../redux/cartSlice";
 
-import { UsedAPI } from "../api/BaseUrl";
+import { getUsedAPI } from "../api/BaseUrl";
 
 export default function CartPage() {
     const cartItems = useSelector((state) => state.cart.items);
@@ -61,7 +61,7 @@ export default function CartPage() {
         }));
 
         try {
-            const response = await fetch(`${UsedAPI}orders/${userId}`, {
+            const response = await fetch(`${getUsedAPI()}orders/${userId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
