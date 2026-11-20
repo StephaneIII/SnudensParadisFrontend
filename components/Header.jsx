@@ -2,7 +2,7 @@
 // Link is used to navigation between Next.js pages.
 // useSelector is used to read data from Redux-store.
 import { useState } from "react";
-import Link from "next/link";
+import Link from "./ApiLink";
 import { useSelector } from "react-redux";
 import "./Header.css"; // Import the CSS file for styling
 
