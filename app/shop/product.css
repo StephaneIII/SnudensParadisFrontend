@@ -1,0 +1,143 @@
+
+/* ===== Product Pages ===== */
+
+.product-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 45px 35px;
+    color: #222;
+}
+
+.product-page > h1 {
+    font-size: 32px;
+    color: #176b3a;
+    margin-bottom: 35px;
+    font-weight: 600;
+}
+
+/* Product Grid */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px;
+}
+
+/* Product Card */
+
+.product-item {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e5e8e5;
+    border-radius: 14px;
+    padding: 18px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* Product Image */
+
+.product-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: #f7f8f7;
+    margin-bottom: 18px;
+}
+
+/* Product Information */
+
+.product-item h2 {
+    font-size: 19px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+.product-item p {
+    font-size: 14px;
+    color: #666;
+    margin: 4px 0;
+}
+
+.product-item p:last-of-type {
+    color: #176b3a;
+    font-weight: 600;
+    font-size: 17px;
+    margin-top: 12px;
+}
+
+/* Add to Cart Button */
+
+.product-item button {
+    width: 100%;
+    margin-top: auto;
+    padding: 13px;
+    background: #176b3a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.product-item button:hover {
+    background: #10552d;
+}
+
+/* Loading and Error Messages */
+
+.product-message {
+    padding: 20px;
+    color: #666;
+    font-size: 15px;
+}
+
+.product-error {
+    color: #c0392b;
+    padding: 15px;
+    background: #fff0ef;
+    border-radius: 8px;
+}
+
+/* Responsive Layout */
+
+@media (max-width: 1000px) {
+    .product-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 15px;
+    }
+
+    .product-page {
+        padding: 25px 15px;
+    }
+
+    .product-item {
+        padding: 12px;
+    }
+
+    .product-item img {
+        height: 160px;
+    }
+}
+
+@media (max-width: 420px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+}

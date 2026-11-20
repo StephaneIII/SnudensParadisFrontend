@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import "./cart.css";
 
 import {
     addToCart,
@@ -23,6 +24,7 @@ export default function CartPage() {
 
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const [orderSummary, setOrderSummary] = useState(null);
 
     // Calculate total price
     const totalPrice = cartItems.reduce(
@@ -43,7 +45,6 @@ export default function CartPage() {
             return;
         }
 
-        // Support the different user ID field names
         const userId = user.uid ?? user.userID ?? user.id;
 
         if (!userId) {
@@ -51,10 +52,15 @@ export default function CartPage() {
             return;
         }
 
+        if (cartItems.length === 0) {
+            setMessage("Your cart is empty.");
+            return;
+        }
+
         setLoading(true);
         setMessage("");
 
-        // Convert cart items to the API format
+        // Convert cart items to API format
         const orderItems = cartItems.map((item) => ({
             product_id: item.product_id,
             amount: item.quantity,
@@ -81,16 +87,96 @@ export default function CartPage() {
                 );
             }
 
+            // Save order information before clearing cart
+            setOrderSummary({
+                order: data,
+                items: [...cartItems],
+                total: totalPrice,
+                date: new Date().toLocaleString(),
+            });
+
             // Clear cart only after successful order creation
             dispatch(clearCart());
 
-            setMessage("Order created successfully!");
-            
+            setMessage("");
+
         } catch (error) {
             setMessage(error.message || "Something went wrong.");
         } finally {
             setLoading(false);
         }
+    }
+
+    // Order confirmation
+    if (orderSummary) {
+        return (
+            <div className="page cart-page">
+                <div className="order-confirmation">
+                    <div className="confirmation-icon">✓</div>
+
+                    <h1>Thank you for your order!</h1>
+
+                    <p className="confirmation-message">
+                        Your order has been placed successfully.
+                    </p>
+
+                    <div className="order-summary">
+                        <h2>Order Summary</h2>
+
+                        <p>
+                            <strong>Order ID:</strong>{" "}
+                            {orderSummary.order.order_id ??
+                                orderSummary.order.id ??
+                                "Created"}
+                        </p>
+
+                        <p>
+                            <strong>Date:</strong> {orderSummary.date}
+                        </p>
+
+                        <div className="order-summary-items">
+                            {orderSummary.items.map((item) => (
+                                <div
+                                    className="order-summary-item"
+                                    key={item.product_id}
+                                >
+                                    <img
+                                        src={item.image || "/placeholder.png"}
+                                        alt={item.name}
+                                    />
+
+                                    <div>
+                                        <h3>{item.name}</h3>
+                                        <p>Quantity: {item.quantity}</p>
+                                        <p>
+                                            $
+                                            {(
+                                                Number(item.price) *
+                                                item.quantity
+                                            ).toFixed(2)}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="order-summary-total">
+                            <strong>Total</strong>
+                            <strong>
+                                ${orderSummary.total.toFixed(2)}
+                            </strong>
+                        </div>
+                    </div>
+
+                    <button
+                        className="confirm-button"
+                        onClick={() => setOrderSummary(null)}
+                    >
+                        Continue Shopping
+                    </button>
+                </div>
+            </div>
+        );
     }
 
     return (
